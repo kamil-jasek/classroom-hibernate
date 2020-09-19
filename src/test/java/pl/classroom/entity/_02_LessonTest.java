@@ -7,9 +7,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
+import pl.classroom.util.DateUtil;
 
 public final class _02_LessonTest extends BaseEntityTest {
 
@@ -56,7 +59,7 @@ public final class _02_LessonTest extends BaseEntityTest {
     @Test
     public void testHqlFindAllLessonsPlannedOnDate() {
         // given - example day
-        LocalDate date = LocalDate.of(2020, 9, 1);
+        ZonedDateTime date = DateUtil.from(LocalDate.of(2020, 9, 1));
         // create some lessons & save to db
 
         // when - create Hql to find all lessons which are planned on given day
@@ -70,7 +73,7 @@ public final class _02_LessonTest extends BaseEntityTest {
     @Test
     public void testHqlFindStationaryLessonsBookedAtTime() {
         // given - example date time
-        LocalDateTime dateTime = LocalDateTime.of(2020, 9, 1, 12, 45);
+        ZonedDateTime dateTime = ZonedDateTime.of(2020, 9, 1, 12, 45, 0, 0, ZoneId.systemDefault());
         String roomNumber = "2A";
         // create some lessons
 
