@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import pl.classroom.entity.Student;
 
 public final class HibernateUtil {
 
@@ -31,6 +32,7 @@ public final class HibernateUtil {
 
     private static void addAnnotatedClasses(Configuration configuration) {
 //        configuration.addAnnotatedClass(Classroom.class);
+        configuration.addAnnotatedClass(Student.class);
     }
 
     private static Properties loadAppProperties() throws IOException {
