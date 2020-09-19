@@ -4,7 +4,7 @@
 1. Sprawdź wersje Javy - jeśli jesteś poniżej 11, wtedy ściągnij JDK 11.
 1. Sklonuj projekt na swój komputer - użyj git clone.
 1. Zaimportuj projekt do Intellij IDEA - File -> New -> Project From Existing Sources
-1. W `src/main/java/resources` otwórz plik `hibernate.properties` i sprawdź swoje ustawienia (użytkownik i hasło do mysql)
+1. W `src/main/java/resources` otwórz plik `hibernate.properties` i sprawdź swoje ustawienia (użytkownik i hasło do mysql). Jeśli masz mysql 5, zmień dialect na: `hibernate.dialect=org.hibernate.dialect.MySQL5Dialect`
 1. Sprawdź czy masz włączonego mysql.
 1. W Intellij IDEA uruchom wszystkie testy - tylko jeden HibernateUtilTest powinnien być zielony. To jest test połączenia z bazą danych. Jeśli test nie przechodzi to zweryfikuj swoje parametry połączenia w `hibernate.properties`
 
