@@ -9,7 +9,7 @@
 1. W Intellij IDEA uruchom wszystkie testy - tylko jeden HibernateUtilTest powinnien być zielony. To jest test połączenia z bazą danych. Jeśli test nie przechodzi to zweryfikuj swoje parametry połączenia w `hibernate.properties`
 
 ## Projekt encji
-![alt text](https://ibb.co/KKyK9q0)
+![alt text](https://i.ibb.co/6XsX4Pn/Screenshot-from-2020-09-18-16-05-13.png)
 
 ## Implementacja testów
 1. Wszystkie klasy encji są puste i znajdują się w pakiecie: `pl.classroom.entity`. Musisz je sam zmapować poprzez adnotacje hibernate.
