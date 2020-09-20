@@ -7,9 +7,10 @@ import java.util.List;
 
 public abstract class Lesson {
 
-    public boolean isPlannedOn(ZonedDateTime date) {
-        // TODO - fix
-        return false;
+    private ZonedDateTime date;
+
+    public boolean isPlannedOn(LocalDate date) {
+        return this.date.toLocalDate().equals(date);
     }
 
     public boolean isPlannedAtTime(ZonedDateTime dateTime) {

@@ -67,7 +67,7 @@ public final class _02_LessonTest extends BaseEntityTest {
 
         // then - check if all lessons are planned on given day
         assertFalse(lessons.isEmpty());
-        assertTrue(lessons.stream().allMatch(lesson -> lesson.isPlannedOn(date)));
+        assertTrue(lessons.stream().allMatch(lesson -> lesson.isPlannedOn(date.toLocalDate())));
     }
 
     @Test
