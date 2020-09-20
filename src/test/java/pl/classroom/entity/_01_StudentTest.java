@@ -34,14 +34,16 @@ public final class _01_StudentTest extends BaseEntityTest {
         // given - example name:
         var name = "Jan";
         // create some students
-        saveAndFlush(new Student("Jan", "Kowalski", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE));
-        saveAndFlush(new Student("Adam", "Kowalski", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE));
-        saveAndFlush(new Student("Wojtek", "Jan", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE));
-        saveAndFlush(new Student("jan", "Kwiatek", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE));
+        saveAndFlush(
+            new Student("Jan", "Kowalski", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE),
+            new Student("Adam", "Kowalski", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE),
+            new Student("Wojtek", "Jan", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE),
+            new Student("jan", "Kwiatek", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE));
 
         // when - create hql to find students with given "name" (query should check first and lastname)
         List<Student> results = getSession()
-            .createQuery("from Student s where upper(s.firstName) like :name or upper(s.lastname) like :name", Student.class)
+            .createQuery("from Student s where upper(s.firstName) like :name or upper(s.lastname) like :name",
+                Student.class)
             .setParameter("name", name)
             .getResultList();
 
@@ -57,10 +59,11 @@ public final class _01_StudentTest extends BaseEntityTest {
         // given - example gender
         var gender = Gender.FEMALE;
         // create some students
-        saveAndFlush(new Student("Jan", "Kowalski", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.FEMALE));
-        saveAndFlush(new Student("Adam", "Kowalski", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE));
-        saveAndFlush(new Student("Wojtek", "Jan", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.FEMALE));
-        saveAndFlush(new Student("jan", "Kwiatek", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE));
+        saveAndFlush(
+            new Student("Jan", "Kowalski", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.FEMALE),
+            new Student("Adam", "Kowalski", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE),
+            new Student("Wojtek", "Jan", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.FEMALE),
+            new Student("jan", "Kwiatek", DateUtil.from(LocalDate.of(2000, 1, 1)), Gender.MALE));
 
         // when - create hql which counts students by gender
         var count = getSession()
