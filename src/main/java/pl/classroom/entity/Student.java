@@ -14,7 +14,7 @@ public final class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private String firstName;
 
@@ -70,7 +70,7 @@ public final class Student {
             return false;
         }
         Student student = (Student) o;
-        return id.equals(student.id) &&
+        return id == student.id &&
             firstName.equals(student.firstName) &&
             lastname.equals(student.lastname) &&
             dateOfBirth.equals(student.dateOfBirth) &&
