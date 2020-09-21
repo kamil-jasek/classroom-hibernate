@@ -5,17 +5,38 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
+import pl.classroom.util.DateTimeUtil;
+import pl.classroom.util.DateUtil;
 
 public final class _04_ClassroomTest {
+
+    Student student1 = new Student("Alex", "Kowal",
+            DateUtil.from(LocalDate.of(1990, 10, 1)), Student.Gender.MALE);
+    Student student2 = new Student("Alex", "Kowal",
+            DateUtil.from(LocalDate.of(1990, 10, 1)), Student.Gender.MALE);
+    Student student3 = new Student("Alex", "Kowal",
+            DateUtil.from(LocalDate.of(1990, 10, 1)), Student.Gender.MALE);
+
+    StationaryLesson mathLesson = new StationaryLesson(Subject.MATH,
+            ZonedDateTime.of(2020, 10, 2, 11, 40, 40, 0, ZoneId.systemDefault()),
+            "234", "66 Street");
 
     @Test
     public void testCreateClassroom() {
         // given - create classroom entity
-        Classroom classroom = null;
+        Classroom classroom = new Classroom("First Class", DateTimeUtil.from(LocalDateTime.of(2020, 10, 1, 9, 0)),
+                DateTimeUtil.from(LocalDateTime.of(2020, 10, 1, 15, 0));
         // add 3 students, add 2 lessons and 1 exam
+        classroom.addStudents(student1, student2, student3);
+
+
 
 
         // when - save classroom into db
