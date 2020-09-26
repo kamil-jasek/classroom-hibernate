@@ -1,18 +1,30 @@
 package pl.classroom.entity;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "Lessons")
+@Table(name = "lessons")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "lesson_type")
-public abstract class Lesson {
+@Where(clause = "deleted <> true")
+public abstract class Lesson extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +41,7 @@ public abstract class Lesson {
     }
 
     public Lesson(Subject subject, ZonedDateTime date) {
+        super(ZonedDateTime.now(), "HIBERNATE");
         this.subject = subject;
         this.date = date;
         participants = new ArrayList<>();

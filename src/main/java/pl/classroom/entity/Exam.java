@@ -5,9 +5,14 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
-public final class Exam {
+@Table(name = "exams")
+@SQLDelete(sql = "UPDATE exams SET deleted = true, deleteTime = NOW() WHERE id = ?")
+@Where(clause = "deleted <> true")
+public final class Exam extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +29,7 @@ public final class Exam {
     }
 
     public Exam(Subject subject, ZonedDateTime time) {
+        super(ZonedDateTime.now(), "HIBERNATE");
         this.subject = subject;
         this.time = time;
         this.rates = new ArrayList<>();

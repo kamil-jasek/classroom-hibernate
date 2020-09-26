@@ -1,9 +1,15 @@
 package pl.classroom.entity;
 
+import java.time.ZonedDateTime;
 import javax.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
-public final class Rate {
+@Table(name = "rates")
+@SQLDelete(sql = "UPDATE rates SET deleted = true, deleteTime = NOW() WHERE id = ?")
+@Where(clause = "deleted <> true")
+public final class Rate extends Auditable {
 
     public enum Value {
         A, B, C, D, E;
@@ -23,6 +29,7 @@ public final class Rate {
     }
 
     public Rate(Value value, Student student) {
+        super(ZonedDateTime.now(), "HIBERNATE");
         this.value = value;
         this.student = student;
     }

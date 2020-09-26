@@ -1,11 +1,17 @@
 package pl.classroom.entity;
 
-import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @DiscriminatorValue("ONLINE")
+@SQLDelete(sql = "UPDATE lessons SET deleted = true, deleteTime = NOW() WHERE id = ?")
+@Where(clause = "deleted <> true")
 public final class OnlineLesson extends Lesson {
 
     @Column(length = 80)

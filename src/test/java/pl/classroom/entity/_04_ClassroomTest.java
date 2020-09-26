@@ -14,6 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
+import pl.classroom.entity.Rate.Value;
 import pl.classroom.entity.Student.Gender;
 import pl.classroom.util.DateTimeUtil;
 import pl.classroom.util.DateUtil;
@@ -149,7 +150,13 @@ public final class _04_ClassroomTest extends BaseEntityTest {
     public void testDeleteClassroom() {
         // given - create classroom
         Classroom classroom = new Classroom("Class A", DateUtil.from(LocalDate.of(2020, 9, 1)), DateUtil.from(LocalDate.of(2021, 6, 30)));
-        classroom.addStudents(new Student("Jan", "Nowak", DateUtil.from(LocalDate.of(1990, 1, 1)), Gender.MALE));
+        final var student = new Student("Jan", "Nowak", DateUtil.from(LocalDate.of(1990, 1, 1)), Gender.MALE);
+        classroom.addStudents(student);
+        final var exam = new Exam(Subject.MATH, ZonedDateTime.now());
+        exam.addRate(new Rate(Value.A, student));
+        classroom.addExams(exam);
+        final var lesson = new OnlineLesson(Subject.MATH, DateUtil.from(LocalDate.of(2020, 9, 1)), "test", "test");
+        classroom.addLessons(lesson);
         final var id = saveAndFlush(classroom);
 
         // when - soft delete classroom
