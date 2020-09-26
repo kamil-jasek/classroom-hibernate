@@ -38,6 +38,7 @@ public final class HibernateUtil {
         configuration.addAnnotatedClass(Lesson.class);
         configuration.addAnnotatedClass(Exam.class);
         configuration.addAnnotatedClass(Rate.class);
+        configuration.addAnnotatedClass(Classroom.class);
     }
 
     private static Properties loadAppProperties() throws IOException {

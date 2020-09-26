@@ -13,7 +13,7 @@ public final class Rate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(value = EnumType.ORDINAL)
     private Value value;
 
     @OneToOne(cascade = CascadeType.ALL)

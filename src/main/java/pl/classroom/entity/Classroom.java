@@ -1,22 +1,25 @@
 package pl.classroom.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import org.hibernate.annotations.Fetch;
+
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public final class Classroom {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
     private ZonedDateTime startDate;
     private ZonedDateTime endDate;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Student> students;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Exam> exams;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -53,6 +56,12 @@ public final class Classroom {
         }
     }
 
+    public void removeStudents(Student... studentList) {
+        for (Student student : studentList) {
+            this.students.remove(student);
+        }
+    }
+
 
     public List<Student> getStudents() {
         // TODO -fix
@@ -67,5 +76,21 @@ public final class Classroom {
     public List<Exam> getExams() {
         // TODO - fix
         return new ArrayList<>(exams);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Classroom classroom = (Classroom) o;
+        return id == classroom.id &&
+                name.equals(classroom.name) &&
+                startDate.equals(classroom.startDate) &&
+                endDate.equals(classroom.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, startDate, endDate);
     }
 }
