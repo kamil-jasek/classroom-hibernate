@@ -2,6 +2,7 @@ package pl.classroom.entity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
@@ -64,5 +65,18 @@ public class _05_ClassroomDaoTest {
         // then
         assertFalse(classrooms.isEmpty());
         assertTrue(classrooms.stream().allMatch(classroom -> classroom.getExams().isEmpty()));
+    }
+
+    @Test
+    public void testFindAllClassroomsWithLessonsPlannedOnDate() {
+        // given - create 2 classrooms in a given date, and 1 classroom in a previous date, save and flush
+        LocalDate date = LocalDate.of(2020, 9, 1);
+
+        // when
+        final var classrooms = dao.findAllClassroomsWithLessonsPlannedOnDate(date);
+
+        // then
+        assertNotNull(classrooms);
+        assertEquals(2, classrooms.size());
     }
 }

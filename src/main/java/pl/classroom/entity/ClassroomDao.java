@@ -1,5 +1,7 @@
 package pl.classroom.entity;
 
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import pl.classroom.util.AbstractDao;
@@ -22,5 +24,9 @@ public final class ClassroomDao extends AbstractDao {
     public List<Classroom> findAllClassroomsWithoutExams() {
         return session.createQuery("SELECT c FROM Classroom c WHERE c.exams IS EMPTY", Classroom.class)
             .getResultList();
+    }
+
+    public List<Classroom> findAllClassroomsWithLessonsPlannedOnDate(LocalDate date) {
+        return null;
     }
 }
