@@ -1,15 +1,24 @@
 package pl.classroom.entity;
 
-import org.hibernate.annotations.Fetch;
-
-import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
-public final class Classroom {
+@Table(name = "classrooms")
+@SQLDelete(sql = "UPDATE classrooms SET deleted = true, deleteTime = NOW() WHERE id = ?")
+@Where(clause = "deleted <> true")
+public final class Classroom extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +34,18 @@ public final class Classroom {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Lesson> lessons;
 
-    public Classroom() {
-        this.students = new ArrayList<>();
-        this.exams = new ArrayList<>();
-        this.lessons = new ArrayList<>();
+    @OnlyForHibernate
+    protected Classroom() {
     }
 
     public Classroom(String name, ZonedDateTime startDate, ZonedDateTime endDate) {
-        this();
+        super(ZonedDateTime.now(), "HIBERNATE");
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.students = new ArrayList<>();
+        this.exams = new ArrayList<>();
+        this.lessons = new ArrayList<>();
     }
 
     public void addStudents(Student... studentList) {

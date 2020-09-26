@@ -1,11 +1,21 @@
 package pl.classroom.entity;
 
-import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
-public final class Student {
+@Table(name = "students")
+@SQLDelete(sql = "UPDATE students SET deleted = true, deleteTime = NOW() WHERE id = ?")
+@Where(clause = "deleted <> true")
+public final class Student extends Auditable {
 
     public enum Gender {
         MALE, FEMALE;
@@ -23,10 +33,12 @@ public final class Student {
     private ZonedDateTime dateOfBirth;
     private Gender gender;
 
-    public Student() {
+    @OnlyForHibernate
+    protected Student() {
     }
 
     public Student(String firstName, String lastName, ZonedDateTime dateOfBirth, Gender gender) {
+        super(ZonedDateTime.now(), "HIBERNATE");
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;

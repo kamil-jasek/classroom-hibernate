@@ -3,6 +3,7 @@ package pl.classroom.entity;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
+import pl.classroom.entity.Student.Gender;
 import pl.classroom.util.DateTimeUtil;
 import pl.classroom.util.DateUtil;
 
@@ -141,5 +143,23 @@ public final class _04_ClassroomTest extends BaseEntityTest {
         assertNotNull(objects);
         assertEquals(theBestStudent, objects);
 
+    }
+
+    @Test
+    public void testDeleteClassroom() {
+        // given - create classroom
+        Classroom classroom = new Classroom("Class A", DateUtil.from(LocalDate.of(2020, 9, 1)), DateUtil.from(LocalDate.of(2021, 6, 30)));
+        classroom.addStudents(new Student("Jan", "Nowak", DateUtil.from(LocalDate.of(1990, 1, 1)), Gender.MALE));
+        final var id = saveAndFlush(classroom);
+
+        // when - soft delete classroom
+        Classroom deleteClassroom = getSession().get(Classroom.class, id);
+        getSession().remove(deleteClassroom);
+        getSession().flush();
+        getSession().clear();
+
+        // then - verify
+        Classroom readClassroom = getSession().get(Classroom.class, id);
+        assertNull(readClassroom);
     }
 }
