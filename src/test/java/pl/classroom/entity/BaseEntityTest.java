@@ -37,4 +37,12 @@ abstract class BaseEntityTest {
         session.clear();
         return id;
     }
+
+    protected void saveAndFlush(Object... objects) {
+        for (Object object : objects) {
+            session.save(object);
+        }
+        session.flush();
+        session.clear();
+    }
 }
